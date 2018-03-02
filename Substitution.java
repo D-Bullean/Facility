@@ -1,37 +1,57 @@
+/**
+ * <p>
+ * Cryptography - Substitution Cipher (Substitution Cipher)
+ * </p>
+ * This Substitution cipher again contains two methods for encrypting and decrypting.
+ * It takes ASCII character inputs right now, but can be later changed to work with more.
+ * These characters are mapped to a predetermined key and are encrypted this way.
+ * @author Dylan Bull
+ * @date 03/02/2018
+ */
 import java.math.BigInteger;
 
 public class Substitution {
 
-	public BigInteger encrypt(BigInteger message, BigInteger key) {
-		String alphabet = "0123456789";
+	public String encrypt(String plaintext) {
+		System.out.println("\nStarting Substitution Encryption...");
 		String ciphertext = "";
-		String m = message.toString();
-		String k = key.toString();
-		for (int x = 0; x < m.length(); x++) {
-			for (int y = 0; y < alphabet.length(); y++) {
-				if (m.charAt(x) == alphabet.charAt(y)) {
-					ciphertext += k.charAt(y);
-				}
+		String key = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
+		// Parsing input to get each character
+		for (int x = 0; x < plaintext.length(); x++) {
+			char c = plaintext.charAt(x);
+			if (c == ' ') {
+				ciphertext += ' ';
+			} else if (c > 'z' || c < 'A') {
+				System.err.println("Invalid character at index:" + x + "(" + c + ")");
+			} else {
+				// Modifying the index of the character input to work with the key mapping
+				int index = (int) (c % 65);
+				ciphertext += key.charAt(index);
 			}
 		}
-		BigInteger cipher = new BigInteger(ciphertext);
-		return cipher;
+		System.out.println("Plaintext: " + plaintext);
+		return "Ciphertext: " + ciphertext;
 	}
 
-	public BigInteger decrypt(BigInteger cipher, BigInteger key) {
-		String alphabet = "0123456789";
+	public String decrypt(String ciphertext) {
+		System.out.println("\nStarting Substitution Decryption...");
 		String plaintext = "";
-		String c = cipher.toString();
-		String k = key.toString();
-		for (int x = 0; x < c.length(); x++) {
-			for (int y = 0; y < k.length(); y++) {
-				if (c.charAt(x) == k.charAt(y)) {
-					plaintext += alphabet.charAt(y);
-				}
+		String key = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
+		// Parse the ciphertext to get each character which will be manipulated
+		for (int x = 0; x < ciphertext.length(); x++) {
+			char c = ciphertext.charAt(x);
+			if (c == ' ') {
+				plaintext += ' ';
+			} else if (c > 'z' || c < 'A') {
+				System.err.println("Invalid character at index:" + x + "(" + c + ")");
+			} else {
+				// Modifying the index of the character input to work with the key mapping
+				int index = x + 65;
+				plaintext += (char) index;
 			}
 		}
-		BigInteger plain = new BigInteger(plaintext);
-		return plain;
+		System.out.println("Ciphertext: " + ciphertext);
+		return "Plaintext: " + plaintext;
 	}
 
 }
