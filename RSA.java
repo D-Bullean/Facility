@@ -18,16 +18,16 @@ public class RSA // My own RSA to use for the Digital Signature in addition to t
     
     public void generateKeys() // Generates the keys randomly using the prime number 17.
     {
-        Random r = new Random();
+        Random x = new Random();
         
         int bitlength = 17;
 
-        p = BigInteger.probablePrime(bitlength, r);
-        q = BigInteger.probablePrime(bitlength, r);
+        p = BigInteger.probablePrime(bitlength, x);
+        q = BigInteger.probablePrime(bitlength, x);
         n = p.multiply(q);
         z = p.subtract(BigInteger.ONE).multiply(q.subtract(BigInteger.ONE));
 
-        setE(BigInteger.probablePrime(bitlength / 2, r));
+        setE(BigInteger.probablePrime(bitlength / 2, x));
 
         while (z.gcd(getE()).compareTo(BigInteger.ONE) > 0 && getE().compareTo(z) < 0) {
             getE().add(BigInteger.ONE);
