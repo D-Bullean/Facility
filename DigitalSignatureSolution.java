@@ -1,33 +1,19 @@
-package digitalsignaturesolution;
 /**
- *
- * @author Bkd12
- */
+*<p>Cryptography - Digital Signature
+*This calls the function generating RSA as well as the java file that holds most of the equations encrypting and decrypting.
+*on XOR with previous block.
+*
+*@author Brandon Davenport
+*@date 03/02/2018
+*/
+
+package digitalsignaturesolution;
+
 public class DigitalSignatureSolution {
 
     public static void main(String[] args)
     {          
     	TheKeys en = new TheKeys();
-    	Sender a = new Sender(en);
-        Reciever b = new Reciever();
-        Network net = new Network();      
-
-        System.out.println("\n Here you go, Jane." + "\n" + "-Gives the Packet-");
-        
-        net.sendToReceiver(a.getPacket());
-        
-       
-        
-        net.setInternetCondition(0);
-        
-        
-
-        
-       System.out.println("Thanks, John!" + "\n");
-        
-       b.receive(net, en);
-
-
+    	Equations a = new Equations(en);
     }
-
 }
