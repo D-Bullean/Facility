@@ -1,75 +1,61 @@
 /**
-*<p>Cryptography - Digital Signature
-* This is the RSA method used for the Digital signature. TheKeys.java and DigitalSignature.java calls from this file 
-*for keys as well as for encryption and decryption.
+*<p>Cryptography - RSA
+*Takes in message as a BigInteger
+*Generates 2 large primes and calculates private and public keys
+*Uses the public key to encrypt and the private key to decrypt the message
 *
-*@author Taylor FloydMews
+*@author Tyler Connors
 *@date 03/02/2018
 */
-package digitalsignaturesolution;
+
 import java.math.BigInteger;
+import java.util.Scanner;
 import java.util.Random;
 
-public class RSA // My own RSA to use for the Digital Signature in addition to the Hashing
-{
-    private BigInteger p, q, n, z, e, d;
+public class RSA {
+	private BigInteger n;
+	private BigInteger p;
+	private BigInteger q;
+	private BigInteger z;
+	private BigInteger e;
+	private BigInteger d;
 
-    RSA() 
-    {}   
-    
-    public void generateKeys() // Generates the keys randomly using the prime number 17.
-    {
-        Random x = new Random();
-        
-        int bitlength = 17;
+	public void init() //Initializes RSA variables
+	{
+		Random rand = new Random();
+		p = BigInteger.probablePrime(10, rand); //Generates first prime
+		q = BigInteger.probablePrime(10, rand); //Generates second prime
+		n = q.multiply(p);
+		z = (q.subtract(BigInteger.ONE)).multiply(p.subtract(BigInteger.ONE));
+		e = BigInteger.probablePrime(5, rand);
+		while (z.gcd(e).compareTo(BigInteger.ONE) > 0 && e.compareTo(z) < 0) //Ensures e is coprime to z
+		{
+			e.add(BigInteger.ONE);
+		}		
+		d = e.modInverse(z); //Calculates d as the modular inverse of e mod z
+	}
+	
+	public BigInteger encrypt(BigInteger m) //Encrypts message using public key K(e,n)
+	{
+		return m.modPow(e, n);
+	}
+	
+	public BigInteger decrypt(BigInteger c) //Decrypts message using private key K(d,n)
+	{
+		return c.modPow(d, n);
+	}
 
-        p = BigInteger.probablePrime(bitlength, x);
-        q = BigInteger.probablePrime(bitlength, x);
-        n = p.multiply(q);
-        z = p.subtract(BigInteger.ONE).multiply(q.subtract(BigInteger.ONE));
-
-        setE(BigInteger.probablePrime(bitlength / 2, x));
-
-        while (z.gcd(getE()).compareTo(BigInteger.ONE) > 0 && getE().compareTo(z) < 0) {
-            getE().add(BigInteger.ONE);
-        }
-        setD(getE().modInverse(z));
-        }
-
-    public BigInteger processWPrivateKey(BigInteger m) // Sets number to the private key. 
-    {
-    return m.modPow(d, n);
-    }
-   
-    public BigInteger processWPublicKey(BigInteger c) // Sets number to the public key. 
-    {
-         return c.modPow(e, n);
-    }
-    //Returns variables with the number. 
-    public BigInteger getN() 
-    {
-        return n;
-    }
-  
-    public BigInteger getE()
-    {
-        return e;
-    }
-    
-    public void setE(BigInteger e) 
-    {
-        this.e = e;
-    }
-
-    
-    public BigInteger getD() 
-    {
-        return d;
-    }
-
-    public void setD(BigInteger d) 
-    {
-        this.d = d;
-    }
-
+	public static void main(String args[]) //Tests methods
+	{
+		Scanner scan = new Scanner(System.in);
+		RSA Obj = new RSA();
+		Obj.init();
+		System.out.println("Enter test message");
+		BigInteger m = scan.nextBigInteger(); //Generates test m value
+		System.out.println("Original message " + m);
+		m = Obj.encrypt(m);
+		System.out.println("Encrypted " + m);
+		m = Obj.decrypt(m);
+		System.out.println("Decrypted " + m);
+	}
 }
