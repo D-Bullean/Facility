@@ -1,11 +1,14 @@
+/**
+*<p>Cryptography - Digital Signature
+*This is the methodology behind Digital Signature. Using the session key, message, and the signature, each returns
+* something to be placed with the changing variables with different inputs.
+*
+*@author Brandon Davenport
+*@date 03/02/2018
+*/
 package digitalsignaturesolution;
-
 import java.math.BigInteger;
 
-/**
- *
- * @author Brandon Davenport
- */
 public class DigitalSignature //Method for Session Key, Message, and the signature.
 {
 
