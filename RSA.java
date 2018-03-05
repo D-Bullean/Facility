@@ -1,11 +1,12 @@
-package digitalsignaturesolution;
-
 /**
- *
- * @author Brandon Davenport
- */
-
-
+*<p>Cryptography - Digital Signature
+* This is the RSA method used for the Digital signature. TheKeys.java and DigitalSignature.java calls from this file 
+*for keys as well as for encryption and decryption.
+*
+*@author Taylor FloydMews
+*@date 03/02/2018
+*/
+package digitalsignaturesolution;
 import java.math.BigInteger;
 import java.util.Random;
 
