@@ -1,9 +1,12 @@
-package digitalsignaturesolution;
-
 /**
- *
- * @author Brandon Davenport
- */
+*<p>Cryptography - Digital Signature
+* This assigns the RSA values to two different keys for two different individuals.  
+*on XOR with previous block.
+*
+*@author Brandon Davenport
+*@date 03/02/2018
+*/
+package digitalsignaturesolution;
 public class TheKeys  //Begins the RSA algorithm for the Sender and Receiver. 
 {
 
@@ -18,11 +21,7 @@ public class TheKeys  //Begins the RSA algorithm for the Sender and Receiver.
 		receiver.generateKeys();
 		System.out.println("Receiver's public key:Jane(n, e) = (" + receiver.getN() + "," + receiver.getE() +")");//Gives Reciever Private Key.
 		System.out.println("Receiver's private key:Jane(n, d) = (" + receiver.getN() + "," + receiver.getD() +")" + "\n" ); //Gives Receiever's Private Key
-
-		
-		
-		
-	}
+}
 	
 	
 }
