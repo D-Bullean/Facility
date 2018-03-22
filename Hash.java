@@ -12,7 +12,7 @@ public class Hash {
 
 	public BigInteger Hashing(BigInteger message)
         {
-    	BigInteger modulus = new BigInteger("5"); // Takes the input within sender and divides it by 5
+    	BigInteger modulus = new BigInteger("1"); // Takes the input within sender and divides it by 1
     	BigInteger hVal = message.mod(modulus); 
     	return hVal;
     	}
