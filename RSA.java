@@ -43,12 +43,22 @@ public class RSA {
 		privKey[1] = d;
 	}
 	
-	public BigInteger encrypt(BigInteger m) //Encrypts message using public key K(n, e)
+	public BigInteger pubEncrypt(BigInteger m) //Encrypts message using public key K(n, e)
 	{
 		return m.modPow(e, n);
 	}
 	
-	public BigInteger decrypt(BigInteger c) //Decrypts message using private key K(n, d)
+	public BigInteger privEncrypt(BigInteger m) //Encrypts message using private key K(n, d)
+	{
+		return m.modPow(d, n);
+	}
+	
+	public BigInteger privDecrypt(BigInteger c) //Decrypts message using private key K(n, d)
+	{
+		return c.modPow(d, n);
+	}
+	
+	public BigInteger pubDecrypt(BigInteger c) //Decrypts message using public key K(n, d)
 	{
 		return c.modPow(d, n);
 	}
@@ -71,9 +81,9 @@ public class RSA {
 		System.out.println("Enter test message");
 		BigInteger m = scan.nextBigInteger(); //Generates test m value
 		System.out.println("Original message " + m);
-		m = Obj.encrypt(m);
+		m = Obj.pubEncrypt(m);
 		System.out.println("Encrypted " + m);
-		m = Obj.decrypt(m);
+		m = Obj.privDecrypt(m);
 		System.out.println("Decrypted " + m);
 	}
 }
