@@ -19,6 +19,8 @@ public class RSA {
 	private BigInteger z;
 	private BigInteger e;
 	private BigInteger d;
+	private BigInteger privKey[];
+	private BigInteger pubKey[];
 
 	public void init() //Initializes RSA variables
 	{
@@ -33,16 +35,32 @@ public class RSA {
 			e.add(BigInteger.ONE);
 		}		
 		d = e.modInverse(z); //Calculates d as the modular inverse of e mod z
+		pubKey = new BigInteger[2];
+		privKey = new BigInteger[2];
+		pubKey[0] = n;
+		pubKey[1] = e;
+		privKey[0] = n;
+		privKey[1] = d;
 	}
 	
-	public BigInteger encrypt(BigInteger m) //Encrypts message using public key K(e,n)
+	public BigInteger encrypt(BigInteger m) //Encrypts message using public key K(n, e)
 	{
 		return m.modPow(e, n);
 	}
 	
-	public BigInteger decrypt(BigInteger c) //Decrypts message using private key K(d,n)
+	public BigInteger decrypt(BigInteger c) //Decrypts message using private key K(n, d)
 	{
 		return c.modPow(d, n);
+	}
+	
+	public BigInteger[] getPubKey() //Returns public key K(n, e)
+	{
+		return pubKey;
+	}
+	
+	public BigInteger[] getprivKey() //Returns private key K(n, d)
+	{
+		return privKey;
 	}
 
 	public static void main(String args[]) //Tests methods
