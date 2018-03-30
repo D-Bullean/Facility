@@ -1,4 +1,5 @@
 import java.math.BigInteger;
+import java.util.Random;
 
 public class Sender {
 	private Package pack;
@@ -16,6 +17,17 @@ public class Sender {
 		System.out.println("Hashed Message:" + hashMessage);
 
 		System.out.println("Sign H(m) with Senders Private Key");
+		BigInteger encryptedHash = hasher.generateDigSig(message);
+		System.out.println("Signed Hash:" + encryptedHash);
 
+		System.out.println("Generate Session Key");
+
+		Random r = new Random();
+		int keyLength = 16;
+		BigInteger symmetricKey = BigInteger.probablePrime(keyLength, r);
+		System.out.println("Session Key:" + symmetricKey);
+
+		System.out.println("Encrypt Ks with Receiver's public key using RSA algorithm");
+		
 	}
 }
