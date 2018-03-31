@@ -1,4 +1,5 @@
 import java.math.BigInteger;
+import java.util.BitSet;
 
 public class Package {
 	private BigInteger message;
@@ -30,6 +31,10 @@ public class Package {
 		this.message = message;
 	}
 
+	public void setErrorMessage(BigInteger shift) {
+		this.message.add(shift);
+	}
+
 	public BigInteger getMessage() {
 		return this.message;
 	}
@@ -43,7 +48,7 @@ public class Package {
 	}
 
 	public String toString() {
-		return "Message;" + this.message.toString() + "\nSignature:" + this.signature.toString() + "\nSessionKey;"
+		return "\nMessage:" + this.message.toString() + "\nSignature:" + this.signature.toString() + "\nSessionKey:"
 				+ this.sessionKey.toString();
 	}
 
