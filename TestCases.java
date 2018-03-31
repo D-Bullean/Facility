@@ -1,3 +1,14 @@
+
+/**
+*<p>Cryptography - Test Case
+*
+*Test case class containing several cases for encryption facility
+*Along with the newly added network, receiver, and sender classes
+*
+*@author Dylan Bull
+*@date 03/30/2018
+*/
+
 import java.math.BigInteger;
 
 public class TestCases {
@@ -7,6 +18,7 @@ public class TestCases {
 		Substitution _sub = new Substitution();
 		Polyalphabetic _poly = new Polyalphabetic();
 		RSA _rsa = new RSA();
+		_rsa.init();
 		blockCipher _block = new blockCipher();
 		CBC _cbc = new CBC();
 		MAC _mac = new MAC();
@@ -18,44 +30,41 @@ public class TestCases {
 		BigInteger keys = new BigInteger("5");
 		System.out.println("----Shift Cipher----\nEncrypt Test:");
 		BigInteger encryptShift = _shift.encrypt(_message, keys);
-		System.out.println("\t--Plaintext:" + _message);
-		System.out.println("\t--Ciphertext:" + encryptShift);
+		System.out.println("\t--Plain:" + _message + "\n\t--Cipher:" + encryptShift);
 		System.out.println("Decrypt Test:");
+		BigInteger decryptShift = _shift.decrypt(encryptShift, keys);
+		System.out.println("\t--Plain:" + decryptShift + "\n\t--Cipher:" + encryptShift);
 
-		// Substituition Cipher Testing
-		System.out.println(_sub.encrypt("ABCDEFGHIJKLM"));
-		System.out.println(_sub.decrypt("qwertyuiopasd"));
-		// Polyalphabetic Cipher Testing
-		System.out.println(_poly.encrypt("Hello World", shifts));
-		System.out.println(_poly.decrypt("Igqmq Xqwmf", shifts));
-		// RSA Cipher Testing
-		BigInteger message = new BigInteger("2309490");
+		// Substitution testing
+		System.out.println("\n----Substitution test----");
+		String subEncrypt = _sub.encrypt("abcdef");
+		System.out.println("\t--Plaintext:" + _message + "\n\t--Ciphertext:" + subEncrypt);
+		String subDecrypt = _sub.decrypt(subEncrypt);
+		System.out.println("\t--Cipher:" + subEncrypt + "\n\t--Plain:" + subDecrypt);
+
+		// RSA Testing
+		System.out.println("\n----RSA Testing----");
 		_rsa.init();
-		BigInteger encrypted = _rsa.privEncrypt(message);
-		System.out.println(encrypted.toString());
-		// System.out.println(m.toString());
-		// Block Cipher Testing *currently only works with 3 as a key size*
-		_block.encrypt("010110001111", 3);
-		_block.decrypt("101000111001", 3);
-		// Chain Block Cipher testing *supports 3 right now*
-		_cbc.encrypt("010110001111", "010", 3);
-		_cbc.decrypt("110110001000", "010", 3);
-		// MAC testing
-		MAC_package pack = new MAC_package();
-		pack = _mac.encrypt(message, message);
-		System.out.println("\nMessage Authenticated:" + _mac.verify(message, pack));
-		// CA Testing
-		System.out.println(_ca.authorize("8675309"));
+		BigInteger encryptRSA = _rsa.privEncrypt(_message);
+		BigInteger pubEncryptRSA = _rsa.pubEncrypt(_message);
+		BigInteger decryptRSA = _rsa.privDecrypt(encryptRSA);
+		BigInteger pubDecryptRSA = _rsa.pubDecrypt(encryptRSA);
+		System.out.println("Private\n\t--Encrypt:" + encryptRSA + "\n\t--Decrypt:" + decryptRSA);
+		System.out.println("Public\n\t--Encrypt:" + pubEncryptRSA + "\n\t--Decrypt:" + pubDecryptRSA);
 
-		System.out.println("Testing Network");
+		// Network Testing
+
+		System.out.println("--------Testing Network--------");
 		RSA_Keys key = new RSA_Keys();
-		Sender amy = new Sender(key, 0);
-		Receiver bob = new Receiver();
 		Network net = new Network();
+		Receiver bob = new Receiver();
+		Sender amy = new Sender(key, 1);
 
 		net.deliverPacketToReceiver(amy.getPacket());
+
+		// Integer below is shift in message
 		net.hackedPacket(0);
-		bob.receive(net, key.receiver);
+		bob.receive(net, key, 1);
 
 	}
 }

@@ -18,11 +18,13 @@ public class Network {
 	}
 
 	public void hackedPacket(int shift) {
-		if (shift == 0)
+		int temp = shift;
+		if (temp == 0)
 			out = in;
 		else {
-			in.setErrorMessage(new BigInteger(Integer.toString(shift)));
+			in.setErrorMessage(new BigInteger(Integer.toString(temp)));
 			out = in;
+			System.out.println("Hacked");
 		}
 
 	}
