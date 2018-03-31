@@ -14,8 +14,14 @@ public class TestCases {
 
 		int[] shifts = { 1, 2, 5 };
 		// Shift Cipher Testing
-		System.out.println(_shift.encrypt("Hello World", 53));
-		System.out.println(_shift.decrypt("}JQQT <TWQI", 53));
+		BigInteger _message = new BigInteger("100");
+		BigInteger keys = new BigInteger("5");
+		System.out.println("----Shift Cipher----\nEncrypt Test:");
+		BigInteger encryptShift = _shift.encrypt(_message, keys);
+		System.out.println("\t--Plaintext:" + _message);
+		System.out.println("\t--Ciphertext:" + encryptShift);
+		System.out.println("Decrypt Test:");
+
 		// Substituition Cipher Testing
 		System.out.println(_sub.encrypt("ABCDEFGHIJKLM"));
 		System.out.println(_sub.decrypt("qwertyuiopasd"));
@@ -23,8 +29,10 @@ public class TestCases {
 		System.out.println(_poly.encrypt("Hello World", shifts));
 		System.out.println(_poly.decrypt("Igqmq Xqwmf", shifts));
 		// RSA Cipher Testing
-		BigInteger message = new BigInteger("4");
-		System.out.println(_rsa.encrypt(message));
+		BigInteger message = new BigInteger("2309490");
+		_rsa.init();
+		BigInteger encrypted = _rsa.privEncrypt(message);
+		System.out.println(encrypted.toString());
 		// System.out.println(m.toString());
 		// Block Cipher Testing *currently only works with 3 as a key size*
 		_block.encrypt("010110001111", 3);
@@ -38,6 +46,16 @@ public class TestCases {
 		System.out.println("\nMessage Authenticated:" + _mac.verify(message, pack));
 		// CA Testing
 		System.out.println(_ca.authorize("8675309"));
-		System.out.println(_ca.certify("8675309", "1234"));
+
+		System.out.println("Testing Network");
+		RSA_Keys key = new RSA_Keys();
+		Sender amy = new Sender(key, 0);
+		Receiver bob = new Receiver();
+		Network net = new Network();
+
+		net.deliverPacketToReceiver(amy.getPacket());
+		net.hackedPacket(0);
+		bob.receive(net, key.receiver);
+
 	}
 }

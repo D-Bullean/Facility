@@ -8,4 +8,8 @@ public class RSA_Keys {
 	RSA sender = new RSA();
 	RSA receiver = new RSA();
 
+	public RSA_Keys() {
+		sender.init();
+		receiver.init();
+	}
 }

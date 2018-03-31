@@ -1,3 +1,5 @@
+import java.math.BigInteger;
+
 /**
  * <p>
  * Cryptography - Shift Cipher (Caesar Cipher)
@@ -10,43 +12,43 @@
  * @date 03/02/2018
  */
 public class ShiftCipher {
-	public String encrypt(String plaintext, int shift) {
-		System.out.println("\nStarting Shift Encryption...");
-		String ciphertext = "";
-		// Parses the plaintext for each character then takes the index and shifts it
-		// accordingly
-		for (int x = 0; x < plaintext.length(); x++) {
-			char c = plaintext.charAt(x);
-			if (c == ' ') {
-				ciphertext += ' ';
-			} else if (c + shift >= 128) {
-				ciphertext += (char) (((c + shift) % 128) + 48);
-			} else
-				ciphertext += (char) (c + shift);
+	public BigInteger encrypt(BigInteger message, BigInteger key) {
+		return message.add(key);
 
-		}
-		System.out.println("Plaintext: " + plaintext);
-		return "Ciphertext: " + ciphertext;
+		// String ciphertext = "";
+		// // Parses the plaintext for each character then takes the index and shifts it
+		// // accordingly
+		// for (int x = 0; x < plaintext.length(); x++) {
+		// char c = plaintext.charAt(x);
+		// if (c == ' ') {
+		// ciphertext += ' ';
+		// } else if (c + shift >= 128) {
+		// ciphertext += (char) (((c + shift) % 128) + 48);
+		// } else
+		// ciphertext += (char) (c + shift);
+		//
+		// }
+		// return "Ciphertext: " + ciphertext;
 
 	}
 
-	public String decrypt(String ciphertext, int shift) {
-		System.out.println("\nStarting Shift Decryption...");
-		String plaintext = "";
-		// Parse the ciphertext and reverse the shift on the index of the given
-		// character
-		for (int x = 0; x < ciphertext.length(); x++) {
-			char c = ciphertext.charAt(x);
-			if (c == ' ') {
-				plaintext += ' ';
-			} else if (c - shift <= 48) {
-				plaintext += (char) (((c - shift) + 128) - 48);
-			} else
-				plaintext += (char) (c - shift);
+	public BigInteger decrypt(BigInteger ciphertext, BigInteger key) {
+		return ciphertext.subtract(key);
 
-		}
-
-		System.out.println("Ciphertext: " + ciphertext);
-		return "Plaintext: " + plaintext;
+		// String plaintext = "";
+		// // Parse the ciphertext and reverse the shift on the index of the given
+		// // character
+		// for (int x = 0; x < ciphertext.length(); x++) {
+		// char c = ciphertext.charAt(x);
+		// if (c == ' ') {
+		// plaintext += ' ';
+		// } else if (c - shift <= 48) {
+		// plaintext += (char) (((c - shift) + 128) - 48);
+		// } else
+		// plaintext += (char) (c - shift);
+		//
+		// }
+		//
+		// return "Plaintext: " + plaintext;
 	}
 }
