@@ -1,6 +1,6 @@
 /*
  * This makes it so we can reference two separate set of keys for both the sender and the receiver
- * Makes encrypting with the receiver and senders private and public keys easier to disguinish.
+ * Makes encrypting with the receiver and senders private and public keys easier to distinguish.
  * Thinking of adding all of the encryption methods in here for easy reference as well
  * 
  */
